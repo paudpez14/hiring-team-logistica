@@ -8,25 +8,25 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { ProductResume } from "@/src/models/ProductResume.model";
+import { ProductResumeModel } from "@/src/models/ProductResume.model";
 import useAuthStore from "@/src/states/AuthStore";
-import { Page } from "@/src/models/Page.model";
+import { PageModel } from "@/src/models/Page.model";
 import TaskBarInventory from "./TaskBarInventory";
 import InventoryForm from "./InventoryForm";
 import { current } from "@reduxjs/toolkit";
-import { Inventory } from "@/src/models/Inventory.model";
+import { InventoryModel } from "@/src/models/Inventory.model";
 import EditInventoryform from "./EditInventoryform";
 
 const PAGE_SIZE = 10;
 
 export default function InventoryTable() {
-  const [pageInfo, setPageInfo] = useState<Page<ProductResume>>({
+  const [pageInfo, setPageInfo] = useState<PageModel<ProductResumeModel>>({
     current: 1,
   });
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [loading, setLoading] = useState(true); // Estado de carga
-  const [selectedInventory, setSelectInventory] = useState<Inventory>({});
+  const [selectedInventory, setSelectInventory] = useState<InventoryModel>({});
   const [isNewInventory, setIsNewInventory] = useState(false);
   const [isEditInventory, setIsEditInventory] = useState(false);
   const [availableNewInventory, setIsAvailableNewInventory] = useState(false);
@@ -51,16 +51,16 @@ export default function InventoryTable() {
         let { current, hasNext, hasPrevious, numPages, sizeData, results } =
           response.data.data;
 
-        const mappedResults: ProductResume[] = results.map(
-          (result: ProductResume) => ({
+        const mappedResults: ProductResumeModel[] = results.map(
+          (result: ProductResumeModel) => ({
             id: result.id,
             code: result.code,
             name: result.name,
             category: {
-              id: result.category.id,
-              name: result.category.name,
-              code: result.category.code,
-              isActive: result.category.isActive,
+              id: result.category !== undefined ? result.category.id:0,
+              name: result.category !== undefined ? result.category.name:"",
+              code:  result.category !== undefined ? result.category.code:"",
+              isActive:  result.category !== undefined ? result.category.isActive:"",
             },
             inventory: result.inventory
               ? {
@@ -69,9 +69,9 @@ export default function InventoryTable() {
                   length: result.inventory.length,
                   width: result.inventory.width,
                   height: result.inventory.height,
-                  createdAt: new Date(result.inventory.createdAt),
+                  createdAt:  result.inventory.createdAt !== undefined ? new Date(result.inventory.createdAt) : null,
                   updatedAt:
-                    result.inventory.updatedAt !== null
+                    result.inventory.updatedAt !== undefined
                       ? new Date(result.inventory.updatedAt)
                       : null,
                   createdBy: result.inventory.createdBy,
@@ -100,7 +100,7 @@ export default function InventoryTable() {
       console.error("Error fetching data:", error);
     }
   };
-  const onEdit = (inventory: Inventory) => {
+  const onEdit = (inventory: InventoryModel) => {
     setSelectInventory(inventory);
     setIsAvailableEditInventory(true);
   };
@@ -189,7 +189,7 @@ export default function InventoryTable() {
                     <Tooltip title={"Editar"}>
                       <Button
                         type="text"
-                        onClick={() => onEdit(record.inventory)}
+                        onClick={() => onEdit(record.inventory !== undefined  ? record.inventory : {})}
                         icon={<EditOutlined />}
                         style={{ border: "none", background: "none" }}
                       />
@@ -206,7 +206,9 @@ export default function InventoryTable() {
             total: pageInfo?.sizeData,
             onChange: (page) => setPageInfo({ ...pageInfo, current: page }),
           }}
-          rowKey={(record) => record.inventory.id}
+          rowKey={"id"}
+
+
         />
       </ConfigProvider>
       <InventoryForm

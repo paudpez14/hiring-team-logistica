@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Form, InputNumber, Select, Modal, Button, message, Input } from "antd";
-import { InventoryForm } from "@/src/models/InventoryForm.model";
-import { Product } from "@/src/models/Product.model";
+import { InventoryFormModel } from "@/src/models/InventoryForm.model";
+import { ProductModel } from "@/src/models/Product.model";
 import axios from "axios";
 import useAuthStore from "@/src/states/AuthStore";
-import { CategoryForm } from "@/src/models/CategoryForm.model";
+import { CategoryFormModel } from "@/src/models/CategoryForm.model";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -34,7 +34,7 @@ export default function NewCategoryModal({
   const handleCancel = () => {
     setAvailableEditNewCategory(false);
   };
-  const onFinish = async (value: CategoryForm) => {
+  const onFinish = async (value: CategoryFormModel) => {
     setLoading(true);
     try {
       const response = await axios.post(

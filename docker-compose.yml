@@ -7,7 +7,7 @@ services:
     networks:
       - funiber_inventory_network
     ports:
-      - "8000:8000"
+      - "8000:3265"
     environment:
       - spring.datasource.url=jdbc:mysql://mysqldb:3306/funiber_inventory?allowPublicKeyRetrieval=true
     env_file:
@@ -25,16 +25,19 @@ services:
 
   mysqldb:
     image: "mysql:8.0"
+    container_name: funiber_inventory_container
     restart: always
     ports:
       - 3306:3306
     networks:
       - funiber_inventory_network
     environment:
-      DATABASE_HOST: funiber_inventory_container
-      DATABASE_NAME: funiber_inventory
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root123
+      MYSQL_ROOT_PASSWORD: 'root123'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: 'funiber_inventory'
+      MYSQL_PASSWORD: 'root123'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      
 
 networks:
   funiber_inventory_network:

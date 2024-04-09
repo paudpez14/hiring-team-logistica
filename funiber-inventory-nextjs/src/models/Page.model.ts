@@ -1,4 +1,4 @@
-export interface Page<T> {
+export interface PageModel<T> {
     current: number,
     hasNext?: boolean,
     hasPrevious?: boolean,

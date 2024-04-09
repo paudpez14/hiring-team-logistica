@@ -1,14 +1,14 @@
-import { Category } from "@/src/models/Category.model";
-import { Inventory } from "@/src/models/Inventory.model";
-import { InventoryEditForm } from "@/src/models/InventoryEditForm.model";
-import { ProductEditForm } from "@/src/models/ProductEditForm.model";
+import { CategoryModel } from "@/src/models/Category.model";
+import { InventoryModel } from "@/src/models/Inventory.model";
+import { InventoryEditFormModel } from "@/src/models/InventoryEditForm.model";
+import { ProductEditFormModel } from "@/src/models/ProductEditForm.model";
 import useAuthStore from "@/src/states/AuthStore";
 import { Form, message, Modal, Select, Space, Button, InputNumber } from "antd";
 import axios from "axios";
 import { Input } from "postcss";
 import React, { useEffect, useState } from "react";
 interface EditFormProductProps {
-  inventory: Inventory;
+  inventory: InventoryModel;
   availabeEditing: boolean;
   setAvailableEditing: (event: boolean) => void;
   setIsEditInventory: (event: boolean) => void;
@@ -40,7 +40,7 @@ export default function EditInventoryform({
   const handleCancel = () => {
     setAvailableEditing(false);
   };
-  const onFinish = async (value: InventoryEditForm) => {
+  const onFinish = async (value: InventoryEditFormModel) => {
     setConfirmLoading(true);
     try {
       const response = await axios.put(

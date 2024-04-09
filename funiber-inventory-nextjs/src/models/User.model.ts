@@ -1,4 +1,4 @@
-export interface User {
-    id: number;
-    email: string;
+export interface UserModel {
+    id?: number;
+    email?: string;
 }

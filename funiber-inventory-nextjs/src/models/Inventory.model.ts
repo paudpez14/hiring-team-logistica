@@ -1,14 +1,14 @@
-import { User } from "./User.model";
+import { UserModel } from "./User.model";
 
-export interface Inventory {
-    id: number;
-    stockQuantity: number;
-    length: number;
-    width: number;
-    height: number;
-    createdAt: Date;
-    updatedAt: Date;
-    createdBy: User;
-    updatedBy: User;
-    isActive: string;
+export interface InventoryModel {
+    id?: number;
+    stockQuantity?: number;
+    length?: number;
+    width?: number;
+    height?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    createdBy?: UserModel;
+    updatedBy?: UserModel;
+    isActive?: string;
   }

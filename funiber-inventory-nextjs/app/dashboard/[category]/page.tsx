@@ -1,8 +1,8 @@
 import EstructureInventory from "@/components/inventory/EstructureInventory";
 import EstructureCategory from "@/components/category/EstructureCategory";
 import EstructureProducts from "@/components/products/EstructureProducts";
-import { Category } from "@/src/models/Category.model";
-import { User } from "@/src/models/User.model";
+import { CategoryModel } from "@/src/models/Category.model";
+import { UserModel } from "@/src/models/User.model";
 import useAuthStore from "@/src/states/AuthStore";
 import React from "react";
 const apiUrl = process.env.NEXT_PUBLIC_HOST_FUNIBER_BACKEND || "";
@@ -36,7 +36,7 @@ async function getCategories() {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const categories: Category[] = await getCategories();
+  const categories: CategoryModel[] = await getCategories();
 
   let categoryComponent;
   if (params?.category === "products") {

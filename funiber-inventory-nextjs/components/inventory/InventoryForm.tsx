@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, InputNumber, Select, Modal, Button, message } from "antd";
-import { InventoryForm } from "@/src/models/InventoryForm.model";
-import { Product } from "@/src/models/Product.model";
+import { InventoryFormModel } from "@/src/models/InventoryForm.model";
+import { ProductModel } from "@/src/models/Product.model";
 import axios from "axios";
 import useAuthStore from "@/src/states/AuthStore";
 
@@ -30,12 +30,12 @@ export default function InventoryForm({
     process.env.NEXT_PUBLIC_API_PATH_INVENTORY_MANAGEMENT || "";
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
-  const [results, setResults] = useState<Product[]>([]);
+  const [results, setResults] = useState<ProductModel[]>([{code:"",id:0,name:""}]);
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
 
-  const onFinish = async (values: InventoryForm) => {
+  const onFinish = async (values: InventoryFormModel) => {
     setLoading(true);
     try {
       const response = await axios.post(
@@ -105,8 +105,8 @@ export default function InventoryForm({
         }
       );
       if (response.status === 200) {
-        const mappedResults: Product[] = response.data.data.map(
-          (result: Product) => ({
+        const mappedResults: ProductModel[] = response.data.data.map(
+          (result: ProductModel) => ({
             id: result.id,
             code: result.code,
             name: result.name,
@@ -142,7 +142,7 @@ export default function InventoryForm({
 
   const options = results.map((result) => ({
     label: result.code + " - " + result.name,
-    value: result.id.toString(), // Asegúrate de convertir el id a string si es necesario
+    value: result.id !== undefined ? result.id.toString() : '',
   }));
 
   return (

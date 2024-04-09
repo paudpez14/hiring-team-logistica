@@ -1,8 +1,8 @@
-import { Category } from "@/src/models/Category.model";
-import { ProductEditForm } from "@/src/models/ProductEditForm.model";
-import { ProductForm } from "@/src/models/ProductForm.model";
-import { ProductResume } from "@/src/models/ProductResume.model";
-import { Product } from "@/src/models/Product.model";
+import { CategoryModel } from "@/src/models/Category.model";
+import { ProductEditFormModel } from "@/src/models/ProductEditForm.model";
+import { ProductFormModel } from "@/src/models/ProductForm.model";
+import { ProductResumeModel } from "@/src/models/ProductResume.model";
+import { ProductModel } from "@/src/models/Product.model";
 import { useState } from "react";
 import { Button, Modal } from "antd";
 import { Form, Input, Select, Space, message } from "antd";
@@ -14,11 +14,11 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 interface EditFormProductProps {
-  product: ProductResume;
-  categories: Category[];
+  product: ProductResumeModel;
+  categories: CategoryModel[];
   isEditing: boolean;
   setIsEditing: (event: boolean) => void;
-  onEdit: (event: ProductEditForm) => void;
+  onEdit: (event: ProductEditFormModel) => void;
   onCancel: (event: React.ChangeEvent<unknown>) => void;
 }
 
@@ -29,11 +29,11 @@ export default function EditFormProduct({
   setIsEditing,
   isEditing,
 }: EditFormProductProps) {
-  const [editedProduct] = useState<ProductEditForm>({
+  const [editedProduct] = useState<ProductEditFormModel>({
     id: product.id,
     name: product.name,
     code: product.code,
-    category_id: product.category.id,
+    category_id: product.category !== undefined ? product.category.id : 0,
   });
   const [form] = Form.useForm();
   const [open, setOpen] = useState(isEditing);
@@ -56,8 +56,9 @@ export default function EditFormProduct({
   // Configuración de las opciones del select buscable
   const options = categories.map((category) => ({
     label: category.code + " - " + category.name,
-    value: category.id.toString(), // Asegúrate de convertir el id a string si es necesario
+    value: category.id !== undefined ? category.id.toString() : '', // Verificación de undefined y conversión a string
   }));
+    
   const filterOption = (
     input: string,
     option?: { label: string; value: string }

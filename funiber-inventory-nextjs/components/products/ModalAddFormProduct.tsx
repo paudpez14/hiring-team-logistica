@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import { Form, Input, Select, Space, message } from "antd";
-import { Category } from "@/src/models/Category.model";
+import { CategoryModel } from "@/src/models/Category.model";
 import axios from "axios";
 import useAuthStore from "@/src/states/AuthStore";
 const apiUrl = process.env.NEXT_PUBLIC_HOST_FUNIBER_BACKEND || "";
@@ -15,7 +15,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 interface ModalAddFormProductProps {
-  categories: Category[];
+  categories: CategoryModel[];
   isAddProduct: boolean;
   setIsNewProduct: (value: boolean) => void;
   setIsAddProduct: (value: boolean) => void;
@@ -87,8 +87,9 @@ export default function ModalAddFormProduct({
   };
   const options = categories.map((category) => ({
     label: category.code + " - " + category.name,
-    value: category.id.toString(), // Asegúrate de convertir el id a string si es necesario
+    value: category.id !== undefined ? category.id.toString() : '', // Verificación de undefined y conversión a string
   }));
+  
 
 
   const filterOption = (

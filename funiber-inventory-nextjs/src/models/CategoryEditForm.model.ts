@@ -1,4 +1,4 @@
-export interface CategoryEditForm {
-    code:string,
-    name:string
+export interface CategoryEditFormModel {
+    code?:string,
+    name?:string
 }

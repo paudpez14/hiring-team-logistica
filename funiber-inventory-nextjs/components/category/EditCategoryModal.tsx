@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Form, Input, Button, message } from "antd";
-import { Category } from "@/src/models/Category.model";
+import { CategoryModel } from "@/src/models/Category.model";
 import useAuthStore from "@/src/states/AuthStore";
 import axios from "axios";
-import { InventoryEditForm } from "@/src/models/InventoryEditForm.model";
-import { CategoryEditForm } from "@/src/models/CategoryEditForm.model";
+import { InventoryEditFormModel } from "@/src/models/InventoryEditForm.model";
+import { CategoryEditFormModel } from "@/src/models/CategoryEditForm.model";
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -16,7 +16,7 @@ const tailLayout = {
 interface EditCategoryModalProps {
   availableEditCategory: boolean;
   setAvailableEditCategory: (event: boolean) => void;
-  category: Category;
+  category: CategoryModel;
   setCompleteEditCategory: (event: boolean) => void;
 }
 
@@ -39,7 +39,7 @@ export default function EditCategoryModal({
     setAvailableEditCategory(false);
   };
 
-  const onFinish = async (value: CategoryEditForm) => {
+  const onFinish = async (value: CategoryEditFormModel) => {
     setConfirmLoading(true);
     try {
       const response = await axios.put(

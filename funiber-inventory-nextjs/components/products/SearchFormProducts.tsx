@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Input, Button, Modal, Form, Select, Space } from "antd";
-import { Category } from "@/src/models/Category.model";
+import { CategoryModel } from "@/src/models/Category.model";
 import axios from "axios";
 import useAuthStore from "@/src/states/AuthStore";
 import {

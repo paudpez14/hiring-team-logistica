@@ -4,11 +4,11 @@ import SearchFormProducts from "./SearchFormProducts";
 import ProductTable from "./ProductTable";
 import TaskBarProduct from "./TaskBarProduct";
 import HistoryInventoryinventory from "./HistoryInventoryProduct";
-import { Category } from "@/src/models/Category.model";
+import { CategoryModel } from "@/src/models/Category.model";
 import ModalAddFormProduct from "./ModalAddFormProduct";
 const PAGE_SIZE = 10; // Tamaño de página para la paginación
 interface EstructureProductsProps {
-  categories: Category[];
+  categories: CategoryModel[];
 }
 const EstructureProducts = ({ categories }: EstructureProductsProps) => {
   const [isAddProduct, setIsAddProduct] = useState(false);

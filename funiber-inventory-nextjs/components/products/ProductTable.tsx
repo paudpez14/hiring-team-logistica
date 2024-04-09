@@ -1,11 +1,11 @@
-import { Product } from "@/src/models/Product.model";
+import { ProductModel } from "@/src/models/Product.model";
 import React, { useEffect, useState } from "react";
 import EditFormProduct from "./EditFormProduct";
 import DeleteConfirmationProduct from "./DeleteConfirmationProduct";
 import Link from "next/link";
 import axios from "axios";
 import useAuthStore from "@/src/states/AuthStore";
-import { ProductResume } from "@/src/models/ProductResume.model";
+import { ProductResumeModel } from "@/src/models/ProductResume.model";
 import { BarLoader } from "react-spinners";
 import { Button, ConfigProvider, Table, Tooltip, message } from "antd";
 import {
@@ -15,14 +15,14 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { Category } from "@/src/models/Category.model";
-import { ProductEditForm } from "@/src/models/ProductEditForm.model";
+import { CategoryModel } from "@/src/models/Category.model";
+import { ProductEditFormModel } from "@/src/models/ProductEditForm.model";
 import { useSearchTermsProducts } from "@/src/states/SearchTermProducts";
 import HistoryInventoryinventory from "./HistoryInventoryProduct";
 const PAGE_SIZE = 10; // Tamaño de página para la paginación
 
 type ProductProps = {
-  categories: Category[];
+  categories: CategoryModel[];
   isNewProduct: boolean;
   isActiveFilter: boolean;
   setIsFilter: (value: boolean) => void;
@@ -42,7 +42,7 @@ export default function ProductTable({
   const categoryName = useSearchTermsProducts((state) => state.categoryName);
   const productCode = useSearchTermsProducts((state) => state.productCode);
   const productName = useSearchTermsProducts((state) => state.productName);
-  const [selectedProduct, setSelectedProduct] = useState<ProductResume>({
+  const [selectedProduct, setSelectedProduct] = useState<ProductResumeModel>({
     name: "",
     category: {
       id: 0,
@@ -74,7 +74,7 @@ export default function ProductTable({
   const [showHistoryInventory, setshowHistoryInventory] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
-  const [products, setProducts] = useState<ProductResume[]>([]);
+  const [products, setProducts] = useState<ProductResumeModel[]>([]);
   const [loading, setLoading] = useState(true); // Estado de carga
   const [pageInfo, setPageInfo] = useState({
     current: 1,
@@ -85,12 +85,12 @@ export default function ProductTable({
   });
   const [messageApi, contextHolder] = message.useMessage();
 
-  const onEdit = (product: ProductResume) => {
+  const onEdit = (product: ProductResumeModel) => {
     setSelectedProduct(product);
     setIsEditing(true);
   };
 
-  const onDelete = (product: ProductResume) => {
+  const onDelete = (product: ProductResumeModel) => {
     setSelectedProduct(product);
     setIsDelete(true);
   };
@@ -98,7 +98,7 @@ export default function ProductTable({
   const handleCancel = () => {
     setIsEditing(false);
   };
-  const handleEdit = async (editedProduct: ProductEditForm) => {
+  const handleEdit = async (editedProduct: ProductEditFormModel) => {
     try {
       const body = {
         code: editedProduct.code,
@@ -158,7 +158,7 @@ export default function ProductTable({
 
       const { current, hasNext, hasPrevious, numPages, sizeData, results } =
         response.data.data;
-      const mappedResults: ProductResume[] = results.map((result: any) => ({
+      const mappedResults: ProductResumeModel[] = results.map((result: any) => ({
         id: result.id,
         code: result.code,
         name: result.name,
@@ -206,7 +206,7 @@ export default function ProductTable({
 
       const { current, hasNext, hasPrevious, numPages, sizeData, results } =
         response.data.data;
-      const mappedResults: ProductResume[] = results.map((result: any) => ({
+      const mappedResults: ProductResumeModel[] = results.map((result: any) => ({
         id: result.id,
         code: result.code,
         name: result.name,
@@ -258,7 +258,7 @@ export default function ProductTable({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isNewProduct]); // Dependencia: solo se ejecuta cuando isNewProduct cambia
-  const handleConfirmDeleteProduct = async (product: Product) => {
+  const handleConfirmDeleteProduct = async (product: ProductModel) => {
     try {
       const response = await axios.delete(
         `${apiUrl}${apiIventoryPath}products/${product.id}`,
@@ -280,7 +280,7 @@ export default function ProductTable({
     }
   };
 
-  const showOnHistory = (product: ProductResume) => {
+  const showOnHistory = (product: ProductResumeModel) => {
     setSelectedProduct(product);
     setshowHistoryInventory(true);
   };

@@ -1,6 +1,6 @@
-import { Inventory } from "@/src/models/Inventory.model";
-import { Page } from "@/src/models/Page.model";
-import { User } from "@/src/models/User.model";
+import { InventoryModel } from "@/src/models/Inventory.model";
+import { PageModel } from "@/src/models/Page.model";
+import { UserModel } from "@/src/models/User.model";
 import useAuthStore from "@/src/states/AuthStore";
 import {
   Button,
@@ -33,7 +33,7 @@ export default function HistoryInventoryinventory({
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [loading, setLoading] = useState(true);
-  const [pageInfo, setPageInfo] = useState<Page<Inventory[]>>({ current: 1 });
+  const [pageInfo, setPageInfo] = useState<PageModel<InventoryModel[]>>({ current: 1 });
   const [open, setOpen] = useState(showHistoryInventory);
   const [placement] = useState<DrawerProps["placement"]>("bottom");
   const [messageApi, contextHolder] = message.useMessage();
@@ -52,20 +52,24 @@ export default function HistoryInventoryinventory({
       let { current, hasNext, hasPrevious, numPages, sizeData, results } =
         response.data.data;
 
-      const mappedResults: Inventory[] = results.map((result: Inventory) => ({
-        id: result.id,
-        stockQuantity: result.stockQuantity,
-        length: result.length,
-        width: result.width,
-        height: result.height,
-        createdAt: new Date(result.createdAt),
-        updatedAt:
-          result.updatedAt !== null ? new Date(result.updatedAt) : null,
-        createdBy: result.createdBy,
-        updatedBy: result.updatedBy,
-        isActive: result.isActive,
-      }));
-      results = mappedResults;
+        const mappedResults: InventoryModel[] = results.map((result: InventoryModel) => ({
+          id: result.id,
+          stockQuantity: result.stockQuantity,
+          length: result.length,
+          width: result.width,
+          height: result.height,
+          createdAt:  result.createdAt !== undefined ? new Date(result.createdAt) : null,
+          updatedAt: result.updatedAt !== undefined ? new Date(result.updatedAt) : null,
+          createdBy: result.createdBy,
+          updatedBy: result.updatedBy,
+          isActive: result.isActive,
+        }));
+        
+        // Filtrar los resultados que tengan updatedAt diferente de null
+        results = mappedResults.filter((result) => result.updatedAt !== null) as InventoryModel[];
+        
+        
+        
 
       setPageInfo({
         current,

@@ -1,6 +1,6 @@
-export interface Category {
-      id:number,
-      name:string ,
-      code:string ,
-      isActive:string ,
+export interface CategoryModel {
+      id?:number,
+      name?:string ,
+      code?:string ,
+      isActive?:string ,
 }

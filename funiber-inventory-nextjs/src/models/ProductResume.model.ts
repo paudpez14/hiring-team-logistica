@@ -1,10 +1,10 @@
-import { Category } from "./Category.model";
-import { Inventory } from "./Inventory.model";
+import { CategoryModel } from "./Category.model";
+import { InventoryModel } from "./Inventory.model";
 
-export interface ProductResume {
-    id: number,
-    code: string,
-    name: string,
-    category: Category,
-    inventory: Inventory
+export interface ProductResumeModel {
+    id?: number,
+    code?: string,
+    name?: string,
+    category?: CategoryModel,
+    inventory?: InventoryModel
 }

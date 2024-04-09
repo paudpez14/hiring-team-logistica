@@ -1,4 +1,4 @@
-export interface CategoryForm {
-    code: String,
-    name: String
+export interface CategoryFormModel {
+    code?: String,
+    name?: String
 }

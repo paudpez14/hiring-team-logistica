@@ -7,9 +7,9 @@ import {
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { Category } from "@/src/models/Category.model"; // Asegúrate de importar el modelo de Categoría correcto
+import { CategoryModel } from "@/src/models/Category.model"; // Asegúrate de importar el modelo de Categoría correcto
 import useAuthStore from "@/src/states/AuthStore";
-import { Page } from "@/src/models/Page.model";
+import { PageModel } from "@/src/models/Page.model";
 import TaskBarCategory from "./TaskBarCategory"; // Ajusta el nombre del componente de la barra de tareas si es diferente
 import EditCategoryModal from "./EditCategoryModal";
 import NewCategoryModal from "./NewCategoryModal";
@@ -17,7 +17,7 @@ import NewCategoryModal from "./NewCategoryModal";
 const PAGE_SIZE = 10;
 
 export default function CategoryTable() {
-  const [pageInfo, setPageInfo] = useState<Page<Category>>({
+  const [pageInfo, setPageInfo] = useState<PageModel<CategoryModel>>({
     current: 1,
   });
   const token = useAuthStore((state) => state.token);
@@ -27,7 +27,7 @@ export default function CategoryTable() {
   const [completeEditCategory, setCompleteEditCategory] = useState(false);
   const [availableNewCategory, setAvailableEditNewCategory] = useState(false);
   const [completeNewCategory, setCompleteNewCategory] = useState(false);
-  const [selectCategory, setSelectCategory] = useState<Category>({});
+  const [selectCategory, setSelectCategory] = useState<CategoryModel>({});
   const apiUrl = process.env.NEXT_PUBLIC_HOST_FUNIBER_BACKEND || "";
   const apiCategoryPath =
     process.env.NEXT_PUBLIC_API_PATH_INVENTORY_MANAGEMENT || "";
@@ -80,7 +80,7 @@ export default function CategoryTable() {
       console.error("Error fetching data:", error);
     }
   };
-  const onEditCategory = (value: Category) => {
+  const onEditCategory = (value: CategoryModel) => {
     setSelectCategory(value);
     setAvailableEditCategory(true);
     setCompleteEditCategory(false);

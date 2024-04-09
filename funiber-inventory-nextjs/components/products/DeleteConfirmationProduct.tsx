@@ -1,11 +1,11 @@
-import { Product } from "@/src/models/Product.model";
+import { ProductModel } from "@/src/models/Product.model";
 import { Button, Modal } from "antd";
 
 interface DeleteConfirmationProductProps {
-  product: Product;
+  product: ProductModel;
   open: boolean;
   onClose: (event: React.ChangeEvent<unknown>) => void;
-  onConfirm: (event: Product) => void;
+  onConfirm: (event: ProductModel) => void;
 }
 
 export default function DeleteConfirmationProduct({
