@@ -1,10 +1,9 @@
-Claro, aquí te dejo un ejemplo de cómo podrías estructurar el README para explicar cómo crear los archivos `.env` a partir de los archivos `.env.example` en tu proyecto:
-
----
-
 # Configuración de Variables de Entorno
 
 Este proyecto utiliza archivos `.env` para gestionar las variables de entorno necesarias. Antes de iniciar el proyecto, asegúrate de crear estos archivos utilizando los archivos de ejemplo proporcionados.
+## Usuario y contraseña
+email: funiber_admin@mail.com
+password: adminsecret
 
 ## Crear archivo `.env`
 
