@@ -31,10 +31,10 @@ services:
     networks:
       - funiber_inventory_network
     environment:
-      MYSQL_DATABASE: funiber_inventory
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root123
-      MYSQL_ROOT_PASSWORD: root123
+      DATABASE_HOST: funiber_inventory_container
+      DATABASE_NAME: funiber_inventory
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root123
 
 networks:
   funiber_inventory_network:
